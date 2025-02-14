@@ -13,23 +13,24 @@
             <form action="">
                 <h1>University of Ashwini</h1>
                 <div class="input-box">
-                    <input type="text" placeholder="  username"required>
+                    <input id="userName" type="text" placeholder="username" required>
                     <i class='bx bxs-user'></i>
                 </div>
                 <div class="input-box">
-                    <input type="text" placeholder="  password"required>
+                    <input id="password" type="password" placeholder="password" required>
                     <i class='bx bxs-lock-alt'></i>
                 </div>
+                
                 <!--<div class="remember-forgot">
                     <label><input type="checkbox">Remember Me</label>
                     <a href="#">Forgot Password?</a>
                 </div> -->
-                <button type="submit" class="btn">Login</button>
-                <div class="register-link">
+                <button type="button" class="btn" onclick="loginUser()">Login</button>
+                    <p id="error-message" style="color: red;"></p>
                     <p>Don't have an account? <a href="#">Click here</a></p>
                 </div>
             </form>
         </div>
-
+        <script src="script.js"></script> 
     </body>
 </html>
