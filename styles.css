@@ -18,13 +18,13 @@ body {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     border-radius: 10px;
     text-align: center;
-    margin: 40px auto;
+    margin: 70px auto;
 }
 
 .input-box {
     position: relative;
     width: 100%;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
 }
 
 .input-box input {
@@ -39,7 +39,7 @@ body {
 .input-box i {
     position: absolute;
     left: 10px;
-    top: 50%;
+    top: 35%;
     transform: translateY(-50%);
     color: #777;
 }
@@ -70,7 +70,7 @@ h1 {
     margin-top: 15px;
 }
 
-.register-link p {
+.register-link  {
     font-size: 12px;
     text-align: center;
 }
@@ -83,4 +83,20 @@ h1 {
 
 .register-link a:hover {
     text-decoration: underline;
+}
+
+.forgot {
+    text-align: right; /* Aligns to the right */
+    font-size: 12px; /* Makes text smaller */
+    margin-top: 5px; /* Adds space above */
+}
+
+.forgot a {
+    color: #007bff; /* Matches theme */
+    text-decoration: none; /* Removes underline */
+    font-weight: normal;
+}
+
+.forgot a:hover {
+    text-decoration: underline; /* Only underline on hover */
 }

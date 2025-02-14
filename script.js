@@ -1,5 +1,4 @@
 function loginUser() {
-    console.log("Login button clicked");
 
     let username = document.getElementById("userName").value.trim();
     let password = document.getElementById("password").value.trim();
@@ -16,7 +15,6 @@ function loginUser() {
         password: password
     };
 
-    console.log("Sending user data:", user);
 
     fetch("http://127.0.0.1:8080/login/login", {
         method: "POST",
