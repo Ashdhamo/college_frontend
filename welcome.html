@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome</title>
+    <script>
+        window.onload = function() {
+            let userData = sessionStorage.getItem("loggedInUser");
+
+            if (!userData) {
+                alert("You are not logged in! Redirecting to login page...");
+                window.location.href = "login.html";
+                return;
+            }
+
+            let user = JSON.parse(userData);
+            document.getElementById("userName").innerText = user.user_name;
+            document.getElementById("email").innerText = user.email;
+            document.getElementById("position").innerText = user.position;
+            document.getElementById("userId").innerText = user.id;
+        };
+
+        function logout() {
+            sessionStorage.removeItem("loggedInUser");
+            alert("You have been logged out.");
+            window.location.href = "login.html";
+        }
+    </script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 50px;
+        }
+        .container {
+            max-width: 400px;
+            margin: auto;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            color: #007bff;
+        }
+        .info {
+            margin: 10px 0;
+        }
+        .logout-btn {
+            background-color: #dc3545;
+            color: white;
+            border: none;
+            padding: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .logout-btn:hover {
+            background-color: #c82333;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Welcome, <span id="userName"></span>!</h1>
+        <p class="info"><strong>Email:</strong> <span id="email"></span></p>
+        <p class="info"><strong>Position:</strong> <span id="position"></span></p>
+        <p class="info"><strong>User ID:</strong> <span id="userId"></span></p>
+        <button class="logout-btn" onclick="logout()">Logout</button>
+    </div>
+</body>
+</html>
