@@ -1,5 +1,6 @@
 /* Add a black background color to the top navigation */
 /*use colors (176, 135, 12)   rgb(255, 255, 255); rgb(255, 191, 0);*/
+
 .topnav {
     background-color: rgb(176, 135, 12);
     overflow: hidden;
@@ -12,6 +13,7 @@
     left: 0;
     width: 100%;
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
 }
   
 body {
@@ -42,7 +44,7 @@ h1 {
     cursor: pointer;
     margin-right: 3%;
 }
-button {
+.menu-btn {
     background-color: transparent;
     border: none;
 }
@@ -87,3 +89,39 @@ button {
     display: block;
 }
 
+
+.main {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)); /* Prevent overlap */
+    gap: 15px; /* Adds spacing between buttons */
+    justify-content: center;
+    text-align: center;
+    margin-top: 110px; /* Push content below the navbar */
+    padding: 20px;
+}
+
+
+/* Fix Button Layout */
+.main-btn {
+    background-color: rgba(176, 135, 12, 0.7);
+    color: white;
+    font-size: 16px;
+    padding: 10px 20px;
+    border: 1px solid white;
+    border-radius: 5px;
+    cursor: pointer;
+    height: 70px;
+    width: 100%; /* Allows buttons to expand in grid */
+    max-width: 150px; /* Prevents buttons from being too wide */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    backdrop-filter: blur(3px);
+}
+
+/* Fix Button Hover Effect */
+.main-btn:hover {
+    background-color: rgba(255, 191, 0, 0.9);
+    opacity: 1;
+}
