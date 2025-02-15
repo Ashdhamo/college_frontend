@@ -1,0 +1,89 @@
+/* Add a black background color to the top navigation */
+/*use colors (176, 135, 12)   rgb(255, 255, 255); rgb(255, 191, 0);*/
+.topnav {
+    background-color: rgb(176, 135, 12);
+    overflow: hidden;
+    padding: 1px 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: fixed;
+    top:0;
+    left: 0;
+    width: 100%;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+}
+  
+body {
+    background-image: url('/img/campus.jpg');
+    background-size: cover;        
+    background-attachment: fixed;  
+}
+body::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url('/img/campus.jpg') no-repeat center center/cover;
+    filter: blur(3px); /* Blurs the background image */
+    z-index: -1; /* Places it behind all content */
+}
+
+h1 {
+    color: rgb(255, 255, 255);
+    font-family: Arial, Helvetica, sans-serif;
+    margin-left: 3%;
+}
+.bx-menu {
+    font-size: 37px; /* Adjust size */
+    color: #fefefe; /* Ensures correct color */
+    cursor: pointer;
+    margin-right: 3%;
+}
+button {
+    background-color: transparent;
+    border: none;
+}
+#myDropdown {
+    position: absolute;
+    top: 60px; /* Pushes dropdown below the navbar */
+    right: 0px; /* Aligns it to the right */
+    z-index: 1000; /* Ensures it appears above other elements */
+}
+
+
+/* Ensure the dropdown menu is fully visible */
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: white;
+    min-width: 100px; /* Increased width */
+    max-height: 300px; /* Ensure it doesn’t get cut off */
+    overflow-y: auto; /* Scroll if needed */
+    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+    border-radius: 5px;
+    z-index: 1001;
+    right: 0;
+}
+
+/* Links inside the dropdown */
+.dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    font-size: 14px; /* Make text readable */
+}
+
+/* Highlight dropdown items on hover */
+.dropdown-content a:hover {
+    background-color: #ddd;
+}
+
+/* Ensure dropdown menu appears when 'show' class is added */
+.dropdown-content.show {
+    display: block;
+}
+
