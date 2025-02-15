@@ -32,7 +32,7 @@ function loginUser() {
 
         if (data && data.user && data.user.user_name) {
             sessionStorage.setItem("loggedInUser", JSON.stringify(data.user));
-            alert("Login successful! Redirecting...");
+            //alert("Login successful! Redirecting...");
             window.location.href = "welcome.html";
         } else {
             errorMessage.innerText = data ? data.error || "Invalid username or password." : "No response from server.";
