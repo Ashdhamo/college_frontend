@@ -98,7 +98,7 @@ body::before {
 .searchBar {
     margin-top: 70px; /* Pushes search bar below navbar */
     display: flex;
-    justify-content: left; /* Centers search bar */
+    justify-content: left; 
     align-items: center;
     width: 100%;
 }
@@ -128,3 +128,47 @@ body::before {
     margin-left: 3px;
     padding: 10px 3px;
  }
+
+
+ /* Move table closer to the search bar */
+.table-container {
+
+    width: 60%; /* Reduce width for better alignment */
+    margin: 20px 0 0 0%; /* Move table up and align left */
+    text-align: left;
+}
+
+/* Style the table */
+#studentTable {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: white;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Header styling */
+#studentTable thead {
+    background: rgb(176, 135, 12);
+    color: white;
+}
+
+#studentTable th, #studentTable td {
+    padding: 12px;
+    border: 1px solid #ddd;
+    font-size: 16px;
+}
+
+/* Ensure all rows have the same background */
+#studentTable tbody tr {
+    background-color: white;
+}
+
+/* Hover effect */
+#studentTable tbody tr:hover {
+    background-color: #f1f1f1;
+}
+
+
+

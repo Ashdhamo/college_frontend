@@ -26,16 +26,32 @@
         <a href="../login/login.html" class="logout">
             <i class='bx bx-log-out'></i> Logout
         </a>
-        
     </div> 
+    
     <div class="searchBar">
-        <input id="userName" type="text" placeholder="Search for a Student " required>
+        <input id="userName" type="text" placeholder="Search for a Student" required>
         <button>Search</button>
         <button id="filter">
             <i class='bx bxs-chevron-down'></i>
         </button>
     </div>
-      
-      <script src="admin.js"></script> 
+
+    <!-- Student Table -->
+    <div class="table-container">
+        <table id="studentTable" border="1">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                </tr>
+            </thead>
+            <tbody id="studentTableBody">
+                <!-- Student data will be inserted here -->
+            </tbody>
+        </table>
+    </div>
+
+    <script src="admin.js"></script> 
 </body>
+
 </html>
