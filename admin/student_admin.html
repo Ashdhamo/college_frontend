@@ -27,11 +27,40 @@
             <i class='bx bx-log-out'></i> Logout
         </a>
     </div> 
+
+    <div id="filterDropdown" class="dropdown-content">
+        <div class="filter-section">
+            <label for="GPA">GPA:</label>
+            <input id="GPA" type="number" placeholder="Enter GPA" required>
+            <div class="checkbox-group">
+                <label><input id="higherGPA" type="checkbox" onclick="toggleGPAmenu(this)"> Above</label>
+                <label><input id="lowerGPA" type="checkbox" onclick="toggleGPAmenu(this)"> Below</label>
+            </div>
+        </div>
+        
     
+        <div class="filter-section">
+            <h4>Year:</h4>
+            <div class="checkbox-group">
+                <label><input type="checkbox"> 1</label>
+                <label><input type="checkbox"> 2</label>
+                <label><input type="checkbox"> 3</label>
+                <label><input type="checkbox"> 4</label>
+                <label><input type="checkbox"> Other</label>
+            </div>
+        </div>
+    
+        <div class="filter-section">
+            <label for="major">Major:</label>
+            <input id="major" type="text" placeholder="Enter Major" required>
+        </div>
+    </div>
+    
+
     <div class="searchBar">
         <input id="searchInput" type="text" placeholder="Search for a Student" required>
         <button>Search</button>
-        <button id="filter">
+        <button id="filter" onclick="toggleFilterMenu()">
             <i class='bx bxs-chevron-down'></i>
         </button>
     </div>

@@ -78,10 +78,24 @@ searchInput.addEventListener("input", (e) => {
     fetchStudents(value);  
 });
 
+function toggleGPAmenu(clickedCheckbox) {
+    var higherCheckBox = document.getElementById("higherGPA");
+    var lowerCheckBox = document.getElementById("lowerGPA");
+
+    // Uncheck the other checkbox when one is selected
+    if (clickedCheckbox === higherCheckBox) {
+        lowerCheckBox.checked = false;
+    } else if (clickedCheckbox === lowerCheckBox) {
+        higherCheckBox.checked = false;
+    }
+}
 
 
 function toggleMenu() {
     document.getElementById("myDropdown")?.classList.toggle("show");
+}
+function toggleFilterMenu() {
+    document.getElementById("filterDropdown")?.classList.toggle("show");
 }
 
 // Close dropdown when clicking outside
