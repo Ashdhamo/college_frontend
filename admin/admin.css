@@ -101,6 +101,7 @@ body::before {
     justify-content: left; /* Centers search bar */
     align-items: center;
     width: 100%;
+    margin-bottom: 20px;
 }
 
 .searchBar input {
@@ -128,3 +129,64 @@ body::before {
     margin-left: 3px;
     padding: 10px 3px;
  }
+
+ /* Table styling */
+#studentTableContainer {
+    display: flex;
+    justify-content: center;
+}
+
+
+table {
+    
+    width: 80%;
+    border-collapse: collapse;
+    background-color: white;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+thead {
+    background-color: rgb(176, 135, 12);
+    color: white;
+    font-weight: bold;
+}
+
+th, td {
+    padding: 12px;
+    text-align: left;
+}
+
+/* Add line separator between rows */
+tbody tr {
+    border-bottom: 1px solid #ddd;
+}
+
+/* Highlight row on hover */
+tbody tr:hover {
+    background-color: #f5f5f5;
+    cursor: pointer;
+}
+
+/* Style for details row */
+.student-details {
+    background-color: #f9f9f9;
+    font-size: 14px;
+    display: none;
+    padding: 10px;
+}
+
+/* Hide details row initially */
+.hidden {
+    display: none;
+}
+
+/* Show details row when expanded */
+.student-details:not(.hidden) {
+    display: table-row;
+    font-size: 16px;
+    font-weight: bold;
+    transition: all 0.3s ease-in-out;
+}
+
