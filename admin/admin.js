@@ -1,32 +1,59 @@
-window.onload = function() {
-    let userData = sessionStorage.getItem("loggedInUser");
-
-    if (!userData) {
+window.onload = function () {
+    if (!sessionStorage.getItem("loggedInUser")) {
         alert("You are not logged in! Redirecting to login page...");
         window.location.href = "../login/login.html";
         return;
     }
 
-    let user = JSON.parse(userData);
-    document.getElementById("userName").innerText = user.user_name;
-    document.getElementById("email").innerText = user.email;
-    document.getElementById("position").innerText = user.position;
-    document.getElementById("userId").innerText = user.id;
+    fetch("http://127.0.0.1:8080/student/student")
+        .then(response => response.json())
+        .then(data => {
+            let tableBody = document.getElementById("studentTableBody");
+            tableBody.innerHTML = ""; // Clear existing content
+
+            data.forEach(student => {
+                let row = document.createElement("tr");
+                row.innerHTML = `<td>${student.id}</td><td>${student.name}</td>`;
+                row.classList.add("clickable-row");
+                row.onclick = () => toggleDetails(row, student);
+                tableBody.appendChild(row);
+            });
+        })
+        .catch(console.error);
 };
 
+function toggleDetails(row, student) {
+    let nextRow = row.nextElementSibling;
+    
+    // If next row is already a details row, remove it
+    if (nextRow && nextRow.classList.contains("details-row")) {
+        nextRow.remove();
+        return;
+    }
+
+    // Otherwise, create a new details row
+    let detailsRow = document.createElement("tr");
+    detailsRow.classList.add("details-row");
+    detailsRow.innerHTML = `
+        <td colspan="2">
+            <div class="student-details">
+                <p><strong>Email:</strong> ${student.email}</p>
+                <p><strong>Major:</strong> ${student.major}</p>
+                <p><strong>Year:</strong> ${student.year}</p>
+            </div>
+        </td>
+    `;
+
+    row.after(detailsRow);
+}
+
 function toggleMenu() {
-    let dropdown = document.getElementById("myDropdown");
-
-    // Toggle dropdown visibility
-    dropdown.classList.toggle("show");
-
-    // Ensure it fully displays all links
-    dropdown.style.maxHeight = dropdown.scrollHeight + "px";
+    document.getElementById("myDropdown")?.classList.toggle("show");
 }
 
 // Close dropdown when clicking outside
-window.onclick = function(event) {
-    if (!event.target.closest(".menu-btn") && !event.target.closest(".dropdown-content")) {
-        document.getElementById("myDropdown").classList.remove("show");
+window.onclick = function (event) {
+    if (!event.target.closest(".menu-btn, .dropdown-content")) {
+        document.getElementById("myDropdown")?.classList.remove("show");
     }
 };
