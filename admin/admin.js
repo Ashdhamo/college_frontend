@@ -1,3 +1,6 @@
+let searchInput = document.getElementById("searchInput");
+let tableBody = document.getElementById("studentTableBody");
+
 window.onload = function () {
     if (!sessionStorage.getItem("loggedInUser")) {
         alert("You are not logged in! Redirecting to login page...");
@@ -25,13 +28,12 @@ window.onload = function () {
 function toggleDetails(row, student) {
     let nextRow = row.nextElementSibling;
     
-    // If next row is already a details row, remove it
+    // allows toggle on/off info. w/out keeps on duplicating the info when pressed
     if (nextRow && nextRow.classList.contains("details-row")) {
         nextRow.remove();
         return;
     }
 
-    // Otherwise, create a new details row
     let detailsRow = document.createElement("tr");
     detailsRow.classList.add("details-row");
     detailsRow.innerHTML = `
@@ -47,6 +49,37 @@ function toggleDetails(row, student) {
     row.after(detailsRow);
 }
 
+
+function fetchStudents(searchQuery) {
+    fetch("http://127.0.0.1:8080/student/search", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ name: searchQuery })  // Send user input in request body
+    })
+    .then(response => response.json())
+    .then(data => {
+        tableBody.innerHTML = ""; 
+        data.forEach(student => {
+            let row = document.createElement("tr");
+            row.innerHTML = `<td>${student.id}</td><td>${student.name}</td>`;
+            row.classList.add("clickable-row");
+            row.onclick = () => toggleDetails(row, student);
+            tableBody.appendChild(row);
+        });
+    })
+    .catch(console.error);
+}
+
+
+searchInput.addEventListener("input", (e) => {
+    const value = e.target.value.trim(); 
+    fetchStudents(value);  
+});
+
+
+
 function toggleMenu() {
     document.getElementById("myDropdown")?.classList.toggle("show");
 }
@@ -57,3 +90,5 @@ window.onclick = function (event) {
         document.getElementById("myDropdown")?.classList.remove("show");
     }
 };
+
+
