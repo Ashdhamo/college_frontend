@@ -1,6 +1,11 @@
 let searchInput = document.getElementById("searchInput");
 let tableBody = document.getElementById("studentTableBody");
 
+years=[]
+
+const yearCheckboxes = ["year1", "year2", "year3", "year4", "year5"];
+
+
 window.onload = function () {
     if (!sessionStorage.getItem("loggedInUser")) {
         alert("You are not logged in! Redirecting to login page...");
@@ -49,18 +54,29 @@ function toggleDetails(row, student) {
     row.after(detailsRow);
 }
 
-
 function fetchStudents(searchQuery) {
+    let yearFilter = null; // Default to null if no years are selected
+    if (years.length === 1) {
+        yearFilter = years[0]; // Send a single number if only one year is selected
+    } else if (years.length > 1) {
+        yearFilter = years; // Send an array if multiple years are selected
+    }
+
     fetch("http://127.0.0.1:8080/student/search", {
         method: "POST",
         headers: {
             "Content-Type": "application/json"
         },
-        body: JSON.stringify({ name: searchQuery })  // Send user input in request body
+        body: JSON.stringify({ name: searchQuery, year: yearFilter }) 
     })
+   
     .then(response => response.json())
     .then(data => {
+        console.log("Filtered Data from API:", JSON.stringify({ name: searchQuery, year: yearFilter }));
+        console.log("API Response:", data); // Debugging: Ensure API is returning filtered results
+
         tableBody.innerHTML = ""; 
+        
         data.forEach(student => {
             let row = document.createElement("tr");
             row.innerHTML = `<td>${student.id}</td><td>${student.name}</td>`;
@@ -72,6 +88,32 @@ function fetchStudents(searchQuery) {
     .catch(console.error);
 }
 
+yearCheckboxes.forEach(id => {
+    let checkbox = document.getElementById(id);
+    
+    if (checkbox) { // Ensure element exists
+        checkbox.addEventListener("click", (e)=> {
+            let yearValue = parseInt(checkbox.value); // Ensure it retrieves a number
+            
+            if (checkbox.checked) {
+                if (!years.includes(yearValue)) {
+                    years.push(yearValue);
+                    console.log(years)
+                    let searchQuery = searchInput.value.trim(); // Get the current search input value
+                    fetchStudents(searchQuery, years); // Call fetch with the correct arguments
+                    
+                }
+            } else {
+                years = years.filter(num => num !== yearValue);
+                console.log(years)
+                let searchQuery = searchInput.value.trim(); // Get the current search input value
+                fetchStudents(searchQuery, years); // Call fetch with the correct arguments
+                
+            }
+            console.log(years); // Display the updated array
+        });
+    }
+});
 
 searchInput.addEventListener("input", (e) => {
     const value = e.target.value.trim(); 
