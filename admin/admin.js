@@ -1,4 +1,5 @@
 let searchInput = document.getElementById("searchInput");
+let majorInput= document.getElementById("major")
 let tableBody = document.getElementById("studentTableBody");
 
 years=[]
@@ -54,26 +55,27 @@ function toggleDetails(row, student) {
     row.after(detailsRow);
 }
 
-function fetchStudents(searchQuery) {
+function fetchStudents(searchQuery, majorValue) {
     let yearFilter = null; // Default to null if no years are selected
     if (years.length === 1) {
         yearFilter = years[0]; // Send a single number if only one year is selected
     } else if (years.length > 1) {
         yearFilter = years; // Send an array if multiple years are selected
     }
-
+    //console.log(majorValue)
+   
     fetch("http://127.0.0.1:8080/student/search", {
         method: "POST",
         headers: {
             "Content-Type": "application/json"
         },
-        body: JSON.stringify({ name: searchQuery, year: yearFilter }) 
+
+        body: JSON.stringify({ name: searchQuery, year: yearFilter, major: majorValue }), 
     })
-   
+    
     .then(response => response.json())
     .then(data => {
-        console.log("Filtered Data from API:", JSON.stringify({ name: searchQuery, year: yearFilter }));
-        console.log("API Response:", data); // Debugging: Ensure API is returning filtered results
+        console.log("Filtered Data from API:", JSON.stringify({ name: searchQuery, year: yearFilter, major: majorValue}));
 
         tableBody.innerHTML = ""; 
         
@@ -88,6 +90,7 @@ function fetchStudents(searchQuery) {
     .catch(console.error);
 }
 
+
 yearCheckboxes.forEach(id => {
     let checkbox = document.getElementById(id);
     
@@ -98,26 +101,36 @@ yearCheckboxes.forEach(id => {
             if (checkbox.checked) {
                 if (!years.includes(yearValue)) {
                     years.push(yearValue);
-                    console.log(years)
-                    let searchQuery = searchInput.value.trim(); // Get the current search input value
-                    fetchStudents(searchQuery, years); // Call fetch with the correct arguments
+                    //console.log(years)
+                    let searchQuery = searchInput.value.trim(); 
+                    let majorValue = majorInput.value.trim();
+                    console.log("name: "+searchQuery+" major: "+ majorValue)
+                    fetchStudents(searchQuery, majorValue, years); // Call fetch with the correct arguments
                     
                 }
             } else {
                 years = years.filter(num => num !== yearValue);
-                console.log(years)
+                //console.log(years)
                 let searchQuery = searchInput.value.trim(); // Get the current search input value
                 fetchStudents(searchQuery, years); // Call fetch with the correct arguments
                 
             }
-            console.log(years); // Display the updated array
+            //console.log(years); // Display the updated array
         });
     }
 });
 
 searchInput.addEventListener("input", (e) => {
     const value = e.target.value.trim(); 
-    fetchStudents(value);  
+    let majorValue = majorInput.value.trim();
+    fetchStudents(value, majorValue);  
+});
+
+majorInput.addEventListener("input", (e) => {
+    const majorValue = e.target.value.trim();
+    //console.log(majorValue);
+    let searchQuery = searchInput.value.trim();
+    fetchStudents(searchQuery, majorValue); // since fetchStudent has searchQuery, first it is expecting that code. w/out majorValue would go in as null
 });
 
 function toggleGPAmenu(clickedCheckbox) {
