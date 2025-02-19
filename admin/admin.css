@@ -293,3 +293,8 @@ body::before {
 .addStudent:hover {
     background-color: #ddd;
 }
+
+.student-details{
+    font: 14px sans-serif;
+    
+}
