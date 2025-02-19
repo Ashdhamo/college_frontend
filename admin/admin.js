@@ -21,8 +21,17 @@ window.onload = function () {
             tableBody.innerHTML = ""; // Clear existing content
 
             data.forEach(student => {
-                let row = document.createElement("tr");
-                row.innerHTML = `<td>${student.id}</td><td>${student.name}</td>`;
+            let row = document.createElement("tr");
+            row.innerHTML = `
+                <td>${student.id}</td>
+                <td>
+                    ${student.name}
+                    <button class="dropdownStudent">
+                    <i class='bx bx-dots-horizontal-rounded student-dots'></i> 
+                    </button>
+                </td>
+            `;
+
                 row.classList.add("clickable-row");
                 row.onclick = () => toggleDetails(row, student);
                 tableBody.appendChild(row);
@@ -81,7 +90,10 @@ function fetchStudents(searchQuery, majorValue) {
         
         data.forEach(student => {
             let row = document.createElement("tr");
-            row.innerHTML = `<td>${student.id}</td><td>${student.name}</td>`;
+            row.innerHTML = `<td>${student.id}</td><td>${student.name}
+                                <button class="dropdownStudent">
+                                <i class='bx bx-dots-horizontal-rounded student-dots'></i> 
+                                </button></td>`;
             row.classList.add("clickable-row");
             row.onclick = () => toggleDetails(row, student);
             tableBody.appendChild(row);

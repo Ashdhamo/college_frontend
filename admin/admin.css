@@ -36,7 +36,7 @@ body::before {
     cursor: pointer;
     margin-right: 3%;
 }
-.home-btn,.menu-btn {
+.home-btn,.menu-btn, .dropdownStudent {
     background-color: transparent;
     border: none;
     margin-right: auto;
@@ -210,9 +210,8 @@ body::before {
     background-color: rgb(150, 115, 10);
 }
 #filterDropdown {
-    min-width: 150px; /* Ensures a decent width */
+    min-width: 150px; 
     background-color: white;
-    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
     border-radius: 8px;
     display: none;
     padding: 10px 5%;
@@ -273,4 +272,24 @@ body::before {
 /* Ensure dropdown appears when 'show' class is added */
 #filterDropdown.show {
     display: block;
+}
+
+.student-dots {
+    font-size: 24px; 
+    color: #cccccc;    
+}
+.dropdownStudent{
+    float: right;
+}
+
+.addStudent{
+    color: #b0afaf;
+    width: 100%;
+    height: 100%;
+    background-color: transparent;
+    border: none;
+    hover:
+}
+.addStudent:hover {
+    background-color: #ddd;
 }
