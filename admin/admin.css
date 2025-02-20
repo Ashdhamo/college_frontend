@@ -96,11 +96,6 @@ body::before {
     top: 3px; 
 }
 
-#filterDropdown {
-    position: absolute;
-    margin-top: 44px;
-}
-
 
 
 
@@ -209,14 +204,7 @@ body::before {
 .searchBar button:hover {
     background-color: rgb(150, 115, 10);
 }
-#filterDropdown {
-    min-width: 150px; 
-    background-color: white;
-    border-radius: 8px;
-    display: none;
-    padding: 10px 5%;
-    font-family: Arial, sans-serif;
-}
+
 
 /* Style sections inside the dropdown */
 .filter-section {
@@ -269,14 +257,16 @@ body::before {
     margin-right: 5px; /* Space between checkbox and label */
 }
 
-/* Ensure dropdown appears when 'show' class is added */
-#filterDropdown.show {
-    display: block;
-}
+
+
 
 .student-dots {
     font-size: 24px; 
     color: #cccccc;    
+}
+.student-dots:hover {
+    font-size: 24px; 
+    background-color: #ece8e8;    
 }
 .dropdownStudent{
     float: right;
@@ -292,4 +282,41 @@ body::before {
 }
 .addStudent:hover {
     background-color: #ddd;
+}
+
+.student-details{
+    font: 14px sans-serif;
+    
+}
+
+#filterDropdown {
+    position: absolute;
+    margin-top: 44px;
+    min-width: 150px; 
+    background-color: white;
+    border-radius: 8px;
+    display: none;
+    padding: 10px 5%;
+    font-family: Arial, sans-serif;
+}
+
+#filterDropdown.show {
+    display: block;
+}
+
+
+#studentDropdown {
+    display: none; /* Initially hidden */
+    position: absolute; /* Absolute positioning */
+    background-color: white;
+    border: 1px solid #ccc;
+    padding: 10px;
+    z-index: 1000;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+    min-width: 120px;
+    min-height: 50px;
+}
+
+#studentDropdown.show {
+    display: block !important; /* Ensure it's shown */
 }

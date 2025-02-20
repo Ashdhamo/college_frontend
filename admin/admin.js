@@ -161,9 +161,6 @@ function toggleGPAmenu(clickedCheckbox) {
 function toggleMenu() {
     document.getElementById("myDropdown")?.classList.toggle("show");
 }
-function toggleFilterMenu() {
-    document.getElementById("filterDropdown")?.classList.toggle("show");
-}
 
 // Close dropdown when clicking outside
 window.onclick = function (event) {
@@ -173,3 +170,46 @@ window.onclick = function (event) {
 };
 
 
+function toggleStudentDropdown(event) {
+    let dropdown = document.getElementById("studentDropdown");
+
+    if (!dropdown) {
+        console.error("Dropdown element not found!");
+        return;
+    }
+
+    let button = event.target.closest(".dropdownStudent");
+    if (!button) {
+        console.error("Dropdown button not found!");
+        return;
+    }
+
+    let rect = button.getBoundingClientRect();
+
+    // Correct dropdown positioning
+    dropdown.style.position = "absolute";
+    dropdown.style.top = `${rect.bottom + window.scrollY}px`;
+    dropdown.style.left = `${rect.left + window.scrollX}px`;
+
+    // Toggle dropdown visibility
+    console.log("Student dropdown toggled");
+    dropdown.classList.toggle("show");
+}
+
+// Attach event listener to dynamically created buttons
+document.getElementById("studentTableBody").addEventListener("click", function(event) {
+    if (event.target.closest(".dropdownStudent")) {
+        toggleStudentDropdown(event);
+    }
+});
+
+// Fix filter dropdown function
+function toggleFilterDropdown() {
+    let dropdown = document.getElementById("filterDropdown");
+    if (!dropdown) return;
+
+    dropdown.classList.toggle("show");
+}
+
+// Attach event listener for filter dropdown
+document.getElementById("filter").addEventListener("click", toggleFilterDropdown);
