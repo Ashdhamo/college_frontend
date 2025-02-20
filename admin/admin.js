@@ -170,6 +170,39 @@ window.onclick = function (event) {
 };
 
 
+
+document.querySelector('.addStudent').addEventListener('click', function() {
+    console.log('Add student button clicked!');
+    let addStudentButton = document.querySelector('.addStudent');
+    let newStudent = document.createElement("tr");
+    newStudent.innerHTML = `
+         <td colspan="2">
+             <div class="student-details">
+             <h4>Add student</h4>
+                 <input id="name" type="text" placeholder="Name">
+                 <input id="major" type="text" placeholder="Major">
+                 <input id="email" type="text" placeholder="Email">
+                <div class="filter-section">
+                <p>Year:</p>
+                 <select id="year" required>
+                        <option value="" disabled selected>Select Year</option>
+                        <option value="1">1st Year</option>
+                        <option value="2">2nd Year</option>
+                        <option value="3">3rd Year</option>
+                        <option value="4">4th Year</option>
+                        <option value="5">Other</option>
+            </select>
+            
+             </div>
+             <button class="postAddStudent" onclick="#">Add Student</button>
+             </div>
+         </td>
+     `;
+    addStudentButton.parentNode.replaceChild(newStudent, addStudentButton);
+});
+
+
+
 function toggleStudentDropdown(event) {
     let dropdown = document.getElementById("studentDropdown");
 
