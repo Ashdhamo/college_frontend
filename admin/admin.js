@@ -21,21 +21,16 @@ window.onload = function () {
             tableBody.innerHTML = ""; // Clear existing content
 
             data.forEach(student => {
-            let row = document.createElement("tr");
-            row.innerHTML = `
-                <td>${student.id}</td>
-                <td>
-                    ${student.name}
-                    <button class="dropdownStudent">
-                    <i class='bx bx-dots-horizontal-rounded student-dots'></i> 
-                    </button>
-                </td>
-            `;
-
+                let row = document.createElement("tr");
+                row.innerHTML = `<td>${student.id}</td><td>${student.name}
+                    <button class="dropdownStudent" value="${student.id}">
+                        <i class='bx bx-dots-horizontal-rounded student-dots'></i> 
+                    </button></td>`;
                 row.classList.add("clickable-row");
                 row.onclick = () => toggleDetails(row, student);
                 tableBody.appendChild(row);
             });
+            
         })
         .catch(console.error);
 };
@@ -91,7 +86,7 @@ function fetchStudents(searchQuery, majorValue) {
         data.forEach(student => {
             let row = document.createElement("tr");
             row.innerHTML = `<td>${student.id}</td><td>${student.name}
-                                <button class="dropdownStudent">
+                                <button class="dropdownStudent" value="${student.id}">
                                 <i class='bx bx-dots-horizontal-rounded student-dots'></i> 
                                 </button></td>`;
             row.classList.add("clickable-row");
@@ -228,27 +223,17 @@ document.querySelector('.addStudent').addEventListener('click', function() {
 });
 function toggleStudentDropdown(event) {
     let dropdown = document.getElementById("studentDropdown");
-
-    if (!dropdown) {
-        console.error("Dropdown element not found!");
-        return;
-    }
-
     let button = event.target.closest(".dropdownStudent");
-    if (!button) {
-        console.error("Dropdown button not found!");
-        return;
-    }
 
     let rect = button.getBoundingClientRect();
 
-    // Correct dropdown positioning
     dropdown.style.position = "absolute";
     dropdown.style.top = `${rect.bottom + window.scrollY}px`;
     dropdown.style.left = `${rect.left + window.scrollX}px`;
 
-    // Toggle dropdown visibility
-    console.log("Student dropdown toggled");
+    let studentId = button.getAttribute("value");
+    dropdown.setAttribute("data-student-id", studentId);
+    console.log("Student ID:", studentId);
     dropdown.classList.toggle("show");
 }
 
@@ -269,3 +254,29 @@ function toggleFilterDropdown() {
 
 // Attach event listener for filter dropdown
 document.getElementById("filter").addEventListener("click", toggleFilterDropdown);
+
+document.querySelector('.deleteStudent').addEventListener('click', function(event) {
+    let dropdown = document.getElementById("studentDropdown");
+    let studentId = dropdown.getAttribute("data-student-id");
+    console.log("Delete clicked for student ID:", studentId);
+    urlDelete = "http://127.0.0.1:8080/student/" + studentId;
+    fetch(urlDelete, {
+        method: "DELETE",
+        headers: {
+            "Content-Type": "application/json"
+        },
+    })
+    .then(data => {
+        console.log("Student deleted successfully:", data);
+        location.reload();
+    })
+    .catch(error => {
+        console.error("Error deleting student:", error);
+    });
+});
+
+document.querySelector('.editStudent').addEventListener('click', function(event) {
+    let dropdown = document.getElementById("studentDropdown");
+    let studentId = dropdown.getAttribute("data-student-id");
+    console.log("Edit clicked for student ID:", studentId); 
+});

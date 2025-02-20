@@ -1,9 +1,8 @@
 .topnav {
     background-color: rgb(176, 135, 12);
-    overflow: hidden;
     padding: 10px 10px;
     display: flex;
-    justify-content: flex-end; /* Moves menu button to the right */
+    justify-content: flex-end; 
     align-items: center;
     position: fixed;
     top: 0;
@@ -53,7 +52,7 @@ body::before {
 
 
 /* Ensure the dropdown menu is fully visible */
-.dropdown-content {
+.dropdown-content{
     
     display: none;
     position: absolute;
@@ -108,15 +107,6 @@ body::before {
     outline: none;
 }
 
-.searchBar button {
-    background-color: rgb(176, 135, 12);
-    color: white;
-    border: 1px solid rgb(176, 135, 12);
-    padding: 10px 15px;
-    cursor: pointer;
-    font-size: 16px;
-}
-
 .searchBar button:hover {
     background-color: rgb(150, 115, 10); /* Slightly darker on hover */
 }
@@ -160,7 +150,6 @@ body::before {
     width: 100%;
 }
 
-/* Ensure filter button stays on the left with a 2px gap from the search button */
 #filter {
     flex-shrink: 0;
     padding: 10px 15px;
@@ -169,23 +158,20 @@ body::before {
     color: white;
     border: 1px solid rgb(176, 135, 12);
     cursor: pointer;
-    margin-right: 2px; /* Adds a 2px gap between filter and search button */
+    margin-right: 2px; 
 }
 
 
-
-/* Make search input expand dynamically and remove spacing */
 #searchInput {
     flex-grow: 1;
     padding: 10px;
     font-size: 16px;
     border: 1px solid #ccc;
-    border-right: none; /* Removes right border so it merges with the button */
+    border-right: none; 
     outline: none;
     min-width: 100px;
 }
 
-/* Ensure search button is flush with input and has a 2px gap from the filter */
 .searchBar button {
     flex-shrink: 0;
     padding: 10px 15px;
@@ -194,19 +180,17 @@ body::before {
     color: white;
     border: 1px solid rgb(176, 135, 12);
     cursor: pointer;
-    border-left: none; /* Ensures no gap between input and button */
+    border-left: none; 
 }
 
 .searchBar button:not(:last-child) {
-    margin-right: 2px; /* Adds a 2px gap between search button and filter */
+    margin-right: 2px; 
 }
 
 .searchBar button:hover {
     background-color: rgb(150, 115, 10);
 }
 
-
-/* Style sections inside the dropdown */
 .filter-section {
     padding-bottom: 10px;
     border-bottom: 1px solid #ddd; /* Adds subtle separation between sections */
@@ -219,14 +203,14 @@ body::before {
     margin-bottom: 0;
 }
 
-/* Remove gap between "Year:" and checkboxes */
+
 .filter-section h4 {
-    margin: 0; /* Removes bottom margin */
+    margin: 0; 
     font-size: 16px;
     font-weight: bold;
 }
 
-/* Style inputs */
+
 #filterDropdown input[type="number"],
 #filterDropdown input[type="text"] {
     width: 100%;
@@ -307,17 +291,36 @@ body::before {
 
 
 #studentDropdown {
-    display: none; /* Initially hidden */
-    position: absolute; /* Absolute positioning */
-    background-color: white;
-    border: 1px solid #ccc;
-    padding: 10px;
+    display: none;
+    position: absolute;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    padding: 8px;
     z-index: 998;
-    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
-    min-width: 120px;
-    min-height: 50px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    border-radius: 6px;
+    min-width: 90px;
+    max-width: 110px;
+    font-family: sans-serif;
 }
 
 #studentDropdown.show {
-    display: block !important; /* Ensure it's shown */
+    display: block !important;
+}
+
+#studentDropdown button {
+    background-color: transparent;
+    border: none;
+    width: 100%;
+    text-align: left;
+    padding: 6px 8px;
+    font-size: 14px;
+    color: #333;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+#studentDropdown button:hover {
+    background-color: #f2f2f2;
+    color: #000;
 }
