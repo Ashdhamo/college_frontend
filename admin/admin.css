@@ -45,7 +45,7 @@ body::before {
 }
 
 #myDropdown {
-    position: absolute;
+    position: fixed;
     top: 50px; /* Pushes dropdown below the navbar */
     right: 0px; /* Aligns it to the right */
     z-index: 1000; /* Ensures it appears above other elements */
@@ -298,6 +298,7 @@ body::before {
     display: none;
     padding: 10px 5%;
     font-family: Arial, sans-serif;
+    z-index: 999;
 }
 
 #filterDropdown.show {
@@ -311,7 +312,7 @@ body::before {
     background-color: white;
     border: 1px solid #ccc;
     padding: 10px;
-    z-index: 1000;
+    z-index: 998;
     box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
     min-width: 120px;
     min-height: 50px;
