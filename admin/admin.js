@@ -179,12 +179,12 @@ document.querySelector('.addStudent').addEventListener('click', function() {
          <td colspan="2">
              <div class="student-details">
              <h4>Add student</h4>
-                 <input id="name" type="text" placeholder="Name">
-                 <input id="major" type="text" placeholder="Major">
-                 <input id="email" type="text" placeholder="Email">
+                 <input id="nameAdded" type="text" placeholder="Name">
+                 <input id="majorAdded" type="text" placeholder="Major">
+                 <input id="emailAdded" type="text" placeholder="Email">
                 <div class="filter-section">
                 <p>Year:</p>
-                 <select id="year" required>
+                 <select id="yearAdded" required>
                         <option value="" disabled selected>Select Year</option>
                         <option value="1">1st Year</option>
                         <option value="2">2nd Year</option>
@@ -199,10 +199,33 @@ document.querySelector('.addStudent').addEventListener('click', function() {
          </td>
      `;
     addStudentButton.parentNode.replaceChild(newStudent, addStudentButton);
+
+
+    document.querySelector('.postAddStudent').addEventListener('click', function() {
+        let nameAdded = document.getElementById("nameAdded").value;
+        let majorAdded = document.getElementById("majorAdded").value;
+        let emailAdded = document.getElementById("emailAdded").value;
+        let yearAdded = document.getElementById("yearAdded").value;
+    
+    
+    if (!nameAdded || !majorAdded || !emailAdded || !yearAdded) {
+        alert("All fields must be filled out before adding a student.");
+        return;
+    }
+    fetch("http://127.0.0.1:8080/student/add", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+
+        body: JSON.stringify({ name: nameAdded, year: yearAdded, major: majorAdded, email: emailAdded }), 
+    })
+ 
+    console.log(JSON.stringify({ name: nameAdded, year: yearAdded, major: majorAdded, email: emailAdded }))
+    location.reload();
+
 });
-
-
-
+});
 function toggleStudentDropdown(event) {
     let dropdown = document.getElementById("studentDropdown");
 
