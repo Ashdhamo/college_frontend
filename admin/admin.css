@@ -300,7 +300,7 @@ body::before {
     box-shadow: 0 4px 8px rgba(0,0,0,0.1);
     border-radius: 6px;
     min-width: 90px;
-    max-width: 110px;
+    max-width: 150px;
     font-family: sans-serif;
 }
 
