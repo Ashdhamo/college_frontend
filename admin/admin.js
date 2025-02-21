@@ -278,5 +278,63 @@ document.querySelector('.deleteStudent').addEventListener('click', function(even
 document.querySelector('.editStudent').addEventListener('click', function(event) {
     let dropdown = document.getElementById("studentDropdown");
     let studentId = dropdown.getAttribute("data-student-id");
-    console.log("Edit clicked for student ID:", studentId); 
+    console.log("Edit clicked for student ID:", studentId);
+    
+    // Create a new div for editing
+    let updatedStudent = document.createElement("div");
+    updatedStudent.innerHTML = `
+        <div class="student-details">
+            <h4>Edit student</h4>
+            <input id="nameAdded" type="text" placeholder="Name">
+            <input id="majorAdded" type="text" placeholder="Major">
+            <input id="emailAdded" type="text" placeholder="Email">
+            <div class="filter-section">
+                <p>Year:</p>
+                <select id="yearAdded" required>
+                    <option value="" disabled selected>Select Year</option>
+                    <option value="1">1st Year</option>
+                    <option value="2">2nd Year</option>
+                    <option value="3">3rd Year</option>
+                    <option value="4">4th Year</option>
+                    <option value="5">Other</option>
+                </select>
+            </div>
+            <button class="postEditStudent">Add Student</button>
+        </div>
+    `;
+
+    // Replace the edit button with the form
+    let editButton = document.querySelector('.editStudent');
+    editButton.parentNode.replaceChild(updatedStudent, editButton);
+
+    document.querySelector('.postEditStudent').addEventListener('click', function() {
+        let nameAdded = document.getElementById("nameAdded").value;
+        let majorAdded = document.getElementById("majorAdded").value;
+        let emailAdded = document.getElementById("emailAdded").value;
+        let yearAdded = document.getElementById("yearAdded").value;
+
+        let updatedFields = {};
+        if (nameAdded) updatedFields.name = nameAdded;
+        if (majorAdded) updatedFields.major = majorAdded;
+        if (emailAdded) updatedFields.email = emailAdded;
+        if (yearAdded) updatedFields.year = yearAdded;
+
+        let urlEdit = "http://127.0.0.1:8080/student/" + studentId;
+        
+        fetch(urlEdit, {
+            method: "PATCH",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(updatedFields), 
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log("Success:", data);
+            location.reload();  // refresh after successful update
+        })
+        .catch(error => {
+            console.error("Error:", error);
+        });
+    });
 });
