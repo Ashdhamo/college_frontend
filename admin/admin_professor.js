@@ -1,3 +1,5 @@
+let searchInput = document.getElementById("searchInput");
+
 window.onload = function () {
     if (!sessionStorage.getItem("loggedInUser")) {
         alert("You are not logged in! Redirecting to login page...");
@@ -54,3 +56,41 @@ function toggleDetails(row, professor) {
 
     row.after(detailsRow);
 }
+
+
+function fetchStudents(searchQuery) {
+
+   console.log("Search Query:", searchQuery);
+    fetch("http://127.0.0.1:8080/professor/search", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+
+        body: JSON.stringify({ name: searchQuery}), 
+    })
+    .then(response => response.json())
+        .then(data => {
+            let tableBody = document.getElementById("studentTableBody");
+            tableBody.innerHTML = ""; // Clear existing content
+
+            data.forEach(professor => {
+                let row = document.createElement("tr");
+                row.innerHTML = `<td>${professor.id}</td><td>${professor.name}
+                    <button class="dropdownStudent" value="${professor.id}">
+                        <i class='bx bx-dots-horizontal-rounded student-dots'></i>
+                    </button></td>`;
+                row.classList.add("clickable-row");
+                row.onclick = () => toggleDetails(row, professor);
+                tableBody.appendChild(row);
+            }); 
+            
+        })
+        .catch(console.error);
+}
+
+
+searchInput.addEventListener("input", (e) => {
+    const value = e.target.value.trim(); 
+    fetchStudents(value);  
+})
