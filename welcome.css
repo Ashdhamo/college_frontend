@@ -96,16 +96,15 @@ h1 {
 
 .main {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)); /* Prevent overlap */
-    gap: 15px; /* Adds spacing between buttons */
-    justify-content: center;
-    text-align: center;
-    margin-top: 110px; /* Push content below the navbar */
+    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+    gap: 20px; /* Keeps spacing between buttons */
+    margin-top: 110px;
     padding: 20px;
+    justify-content: start; /* Aligns buttons to the left */
+    grid-direction: column;
+    align-items: grid-start; /* Align buttons to the left */
 }
 
-
-/* Fix Button Layout */
 .main-btn {
     background-color: rgba(176, 135, 12, 0.7);
     color: white;
@@ -115,8 +114,7 @@ h1 {
     border-radius: 5px;
     cursor: pointer;
     height: 70px;
-    width: 100%; /* Allows buttons to expand in grid */
-    max-width: 150px; /* Prevents buttons from being too wide */
+    max-width: none;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -124,11 +122,14 @@ h1 {
     backdrop-filter: blur(3px);
 }
 
+
 /* Fix Button Hover Effect */
 .main-btn:hover {
     background-color: rgba(255, 191, 0, 0.9);
     opacity: 1;
 }
+
+
 .logout i {
     font-size: 18px;
     position: relative;

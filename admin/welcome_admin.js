@@ -30,3 +30,7 @@ window.onclick = function(event) {
         document.getElementById("myDropdown").classList.remove("show");
     }
 };
+
+
+console.log("Page Width:", window.innerWidth);
+console.log("Page Height:", window.innerHeight);
