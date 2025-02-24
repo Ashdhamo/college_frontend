@@ -33,8 +33,8 @@
             <label for="Salary">Salary:</label>
             <input id="Salary" type="number" placeholder="Enter Salary" required>
             <div class="checkbox-group">
-                <label><input id="Above" type="checkbox" onclick=""> Above</label>
-                <label><input id="Below" type="checkbox" onclick=""> Below</label>
+                <label><input id="Above" type="checkbox" onclick="toggleCheckMenu(this)"> Above</label>
+                <label><input id="Below" type="checkbox" onclick="toggleCheckMenu(this)"> Below</label>
             </div>
         </div>
     
@@ -42,8 +42,8 @@
         <div class="filter-section">
             <label for="Tenure">Tenure:</label>
             <div class="checkbox-group">
-                <label><input id="tenured" type="checkbox" onclick=""> Tenured</label>
-                <label><input id="notTenured" type="checkbox" onclick=""> Not Tenured</label>
+                <label><input id="tenured" type="checkbox" onclick="toggleCheckMenu(this)"> Tenured</label>
+                <label><input id="notTenured" type="checkbox" onclick="toggleCheckMenu(this)"> Not Tenured</label>
             </div>
         </div>
         
@@ -56,8 +56,8 @@
             <label for="classes">Class:</label>
             <input id="classes" type="number" placeholder="Classes Taught" required>
             <div class="checkbox-group">
-                <label><input id="Above" type="checkbox" onclick=""> Above</label>
-                <label><input id="Below" type="checkbox" onclick=""> Below</label>
+                <label><input id="classAbove" type="checkbox" onclick="toggleCheckMenu(this)"> Above</label>
+                <label><input id="classBelow" type="checkbox" onclick="toggleCheckMenu(this)"> Below</label>
             </div>
         </div>
 
@@ -65,8 +65,8 @@
             <label for="students">Students:</label>
             <input id="students" type="number" placeholder="Students Enrolled" required>
             <div class="checkbox-group">
-                <label><input id="Above" type="checkbox" onclick=""> Above</label>
-                <label><input id="Below" type="checkbox" onclick=""> Below</label>
+                <label><input id="studentAbove" type="checkbox" onclick="toggleCheckMenu(this)"> Above</label>
+                <label><input id="studentBelow" type="checkbox" onclick="toggleCheckMenu(this)"> Below</label>
             </div>
         </div>
 

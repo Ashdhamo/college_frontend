@@ -58,17 +58,18 @@ function toggleDetails(row, professor) {
 }
 
 
-function fetchStudents(searchQuery) {
+function fetchStudents(searchQuery,tenureValue) {
+console.log(JSON.stringify({ name: searchQuery, tenure: tenureValue}));
 
-   console.log("Search Query:", searchQuery);
     fetch("http://127.0.0.1:8080/professor/search", {
         method: "POST",
         headers: {
             "Content-Type": "application/json"
         },
 
-        body: JSON.stringify({ name: searchQuery}), 
+        body: JSON.stringify({ name: searchQuery, tenure: tenureValue}), 
     })
+    
     .then(response => response.json())
         .then(data => {
             let tableBody = document.getElementById("studentTableBody");
@@ -89,8 +90,63 @@ function fetchStudents(searchQuery) {
         .catch(console.error);
 }
 
+let tenureValue = [0,1]; // Initialize tenure variable
+
+function toggleCheckMenu(clickedCheckbox) {
+    var tenuredCheckBox = document.getElementById("tenured");
+    var notTenuredCheckBox = document.getElementById("notTenured");
+    var classAboveCheckBox = document.getElementById("classAbove");
+    var classBelowCheckBox = document.getElementById("classBelow");
+    var studentAboveCheckBox = document.getElementById("studentAbove");
+    var studentBelowCheckBox = document.getElementById("studentBelow");
+    var salaryAboveCheckBox = document.getElementById("Above");
+    var salaryBelowCheckBox = document.getElementById("Below");
+
+    if (!tenuredCheckBox.checked && !notTenuredCheckBox.checked) {
+        tenureValue = [0, 1]; // Show all if none are selected
+    } else if (clickedCheckbox === tenuredCheckBox) {
+        notTenuredCheckBox.checked = false;
+        tenureValue = 1;
+    } else if (clickedCheckbox === notTenuredCheckBox) {
+        tenuredCheckBox.checked = false;
+        tenureValue = 0;
+    }
+
+
+    if (clickedCheckbox === classAboveCheckBox) {
+        classBelowCheckBox.checked = false;
+    } else if (clickedCheckbox === classBelowCheckBox) {
+        classAboveCheckBox.checked = false;
+    }
+
+    if (clickedCheckbox === studentAboveCheckBox) {
+        studentBelowCheckBox.checked = false;
+    } else if (clickedCheckbox === studentBelowCheckBox) {
+        studentAboveCheckBox.checked = false;
+    }
+
+    if (clickedCheckbox === salaryAboveCheckBox) {
+        salaryBelowCheckBox.checked = false;
+    } else if (clickedCheckbox === salaryBelowCheckBox) {
+        salaryAboveCheckBox.checked = false;
+    }
+
+    console.log("Tenure status:", tenureValue); // Debugging output to verify changes
+    fetchStudents(searchInput.value.trim(), tenureValue);
+}
+
 
 searchInput.addEventListener("input", (e) => {
-    const value = e.target.value.trim(); 
-    fetchStudents(value);  
+    const value = e.target.value.trim();
+    fetchStudents(value, tenureValue);  
 })
+
+document.addEventListener("DOMContentLoaded", () => {
+    let tenuredCheckBox = document.getElementById("tenured");
+    let notTenuredCheckBox = document.getElementById("notTenured");
+
+    if (tenuredCheckBox && notTenuredCheckBox) {
+        tenuredCheckBox.addEventListener("change", () => toggleCheckMenu(tenuredCheckBox));
+        notTenuredCheckBox.addEventListener("change", () => toggleCheckMenu(notTenuredCheckBox));
+    }
+});
