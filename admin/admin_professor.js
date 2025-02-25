@@ -1,47 +1,14 @@
-let searchInput = document.getElementById("searchInput");
-let salaryInput = document.getElementById("salaryInput");
 let salaryAboveCheckBox = document.getElementById("Above");
 let salaryBelowCheckBox = document.getElementById("Below");
 
-window.onload = function () {
-    if (!sessionStorage.getItem("loggedInUser")) {
-        alert("You are not logged in! Redirecting to login page...");
-        window.location.href = "../login/login.html";
-        return;
-    }
-
-    fetch("http://127.0.0.1:8080/professor/professor")
-        .then(response => response.json())
-        .then(data => {
-            let tableBody = document.getElementById("studentTableBody");
-            tableBody.innerHTML = ""; // Clear existing content
-
-            data.forEach(professor => {
-                let row = document.createElement("tr");
-                row.innerHTML = `<td>${professor.id}</td><td>${professor.name}
-                    <button class="dropdownStudent" value="${professor.id}">
-                        <i class='bx bx-dots-horizontal-rounded student-dots'></i>
-                    </button></td>`;
-                row.classList.add("clickable-row");
-                row.onclick = () => toggleDetails(row, professor);
-                tableBody.appendChild(row);
-            }); 
-            
-        })
-        .catch(console.error);
-};
-
-
 function toggleDetails(row, professor) {
     let nextRow = row.nextElementSibling;
-    
     // allows toggle on/off info. w/out keeps on duplicating the info when pressed
     if (nextRow && nextRow.classList.contains("details-row")) {
         nextRow.remove();
         return;
     }
     let tenureText = professor.tenure === 1 ? "Yes" : "No"; 
-
     let detailsRow = document.createElement("tr");
     detailsRow.classList.add("details-row");
     detailsRow.innerHTML = `
@@ -60,9 +27,8 @@ function toggleDetails(row, professor) {
     row.after(detailsRow);
 }
 
-
-function fetchStudents(searchQuery,tenureValue, salaryIs, salaryValue) {
-console.log(JSON.stringify({ name: searchQuery, tenure: tenureValue, salary: salaryIs, salaryValue: salaryValue}));
+function fetchProfessors(searchQuery,tenureValue, salaryIs, salaryValue, departmentInput) {
+console.log(JSON.stringify({ name: searchQuery, tenure: tenureValue, salary: salaryIs, salaryValue: salaryValue, department: departmentInput}));
 
     fetch("http://127.0.0.1:8080/professor/search", {
         method: "POST",
@@ -70,7 +36,7 @@ console.log(JSON.stringify({ name: searchQuery, tenure: tenureValue, salary: sal
             "Content-Type": "application/json"
         },
 
-        body: JSON.stringify({ name: searchQuery, tenure: tenureValue, salary: salaryIs, salaryValue: salaryValue}), 
+        body: JSON.stringify({ name: searchQuery, tenure: tenureValue, salary: salaryIs, salaryValue: salaryValue, department: departmentInput}), 
     })
     
     .then(response => response.json())
@@ -102,19 +68,14 @@ function toggleCheckMenu(clickedCheckbox) {
     var classBelowCheckBox = document.getElementById("classBelow");
     var studentAboveCheckBox = document.getElementById("studentAbove");
     var studentBelowCheckBox = document.getElementById("studentBelow");
-    //var salaryAboveCheckBox = document.getElementById("Above");
-    // var salaryBelowCheckBox = document.getElementById("Below");
 
     if (!tenuredCheckBox.checked && !notTenuredCheckBox.checked) {
-        tenureValue = [0, 1]; // Show all if none are selected
-    } else if (clickedCheckbox === tenuredCheckBox) {
-        notTenuredCheckBox.checked = false;
+         tenureValue = [0, 1]; // Show all if none are selected
+    } else if (tenuredCheckBox.checked) {
         tenureValue = 1;
-    } else if (clickedCheckbox === notTenuredCheckBox) {
-        tenuredCheckBox.checked = false;
+    } else if (notTenuredCheckBox.checked) {
         tenureValue = 0;
     }
-
 
     if (clickedCheckbox === classAboveCheckBox) {
         classBelowCheckBox.checked = false;
@@ -127,7 +88,6 @@ function toggleCheckMenu(clickedCheckbox) {
     } else if (clickedCheckbox === studentBelowCheckBox) {
         studentAboveCheckBox.checked = false;
     }
-
 
     let salaryValue = salaryInput.value.trim();
     if (salaryValue !== "") {
@@ -146,48 +106,40 @@ function toggleCheckMenu(clickedCheckbox) {
             salaryIs = "greater";
         } else if (salaryBelowCheckBox.checked) {
             salaryIs = "less";
-        }
-        
+        }  
     }else {
         salaryIs = null;
     }
-
-    console.log("Salary:", salaryIs);
-    //console.log("Tenure status:", tenureValue); // Debugging output to verify changes
-    
-    fetchStudents(searchInput.value.trim(), tenureValue, salaryIs, salaryValue);
+    fetchProfessors(searchInput.value.trim(), tenureValue, salaryIs, salaryValue, departmentInput.value.trim());
 }
+window.onload = function () {
+        if (!sessionStorage.getItem("loggedInUser")) {
+            alert("You are not logged in! Redirecting to login page...");
+            window.location.href = "../login/login.html";
+            return;}
+        toggleCheckMenu()}
 
-
-searchInput.addEventListener("input", (e) => {
-    const value = e.target.value.trim();
-    fetchStudents(value, tenureValue);  
-})
+searchInput.addEventListener("input", () =>  toggleCheckMenu(searchInput)); //search name
+departmentInput.addEventListener("input", () => toggleCheckMenu(departmentInput));
 
 document.addEventListener("DOMContentLoaded", () => {
     let tenuredCheckBox = document.getElementById("tenured");
     let notTenuredCheckBox = document.getElementById("notTenured");
-
-    if (tenuredCheckBox && notTenuredCheckBox) {
-        tenuredCheckBox.addEventListener("change", () => toggleCheckMenu(tenuredCheckBox));
-        notTenuredCheckBox.addEventListener("change", () => toggleCheckMenu(notTenuredCheckBox));
-    }
+    tenuredCheckBox.addEventListener("change", () =>{
+        notTenuredCheckBox.checked = false;
+        toggleCheckMenu(tenuredCheckBox)});
+    notTenuredCheckBox.addEventListener("change", () => {
+        tenuredCheckBox.checked = false;
+        toggleCheckMenu(notTenuredCheckBox)});
 });
-
 
 document.addEventListener("DOMContentLoaded", () => {
     salaryInput.addEventListener("input", () => toggleCheckMenu(salaryInput));
     salaryAboveCheckBox.addEventListener("change", () => {
         salaryBelowCheckBox.checked = false;
         toggleCheckMenu(salaryAboveCheckBox)
-    
     });
     salaryBelowCheckBox.addEventListener("change", () => {
         salaryAboveCheckBox.checked = false;
         toggleCheckMenu(salaryBelowCheckBox)});
-    
-    
 });
-
-
-
