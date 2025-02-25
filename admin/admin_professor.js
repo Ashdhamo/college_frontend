@@ -143,3 +143,25 @@ document.addEventListener("DOMContentLoaded", () => {
         salaryAboveCheckBox.checked = false;
         toggleCheckMenu(salaryBelowCheckBox)});
 });
+
+let addProfessorButton = document.querySelector(".addProfessor")
+    addProfessorButton.addEventListener("click", () => {
+    let replaceButton=document.createElement("div")
+    replaceButton.innerHTML = `
+        <div class="addProfessorInfo">
+        <div><h3>Professor Info</h3></div>
+          <div> <input type="text" id="professorName" placeholder="Name" required></div>
+          <div><input type="text" id="professorEmail" placeholder="Email" required></div>
+          <div><input type="text" id="professorPhone" placeholder="Phone" required></div>
+          <div><input type="number" id="professorSalary" placeholder="Salary" required></div>
+          <div><input type="text" id="professorDepartment" placeholder="Department" required></div>
+          <div> <input type="number" id="professorYearsWorked" placeholder="Years Worked" required></div>
+          <div>
+          <input type="radio" name="professorTenure" value=1 required> Tenured
+          <input type="radio" name="professorTenure" value=0 required> Not Tenure</div>
+
+          <button class="addProfessorButton" id="addProfessorButton">Add Professor</button>
+        </div>
+    `;
+    addProfessorButton.parentNode.replaceChild(replaceButton, addProfessorButton);
+})
