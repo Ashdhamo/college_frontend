@@ -1,4 +1,7 @@
 let searchInput = document.getElementById("searchInput");
+let salaryInput = document.getElementById("salaryInput");
+let salaryAboveCheckBox = document.getElementById("Above");
+let salaryBelowCheckBox = document.getElementById("Below");
 
 window.onload = function () {
     if (!sessionStorage.getItem("loggedInUser")) {
@@ -58,8 +61,8 @@ function toggleDetails(row, professor) {
 }
 
 
-function fetchStudents(searchQuery,tenureValue) {
-console.log(JSON.stringify({ name: searchQuery, tenure: tenureValue}));
+function fetchStudents(searchQuery,tenureValue, salaryIs, salaryValue) {
+console.log(JSON.stringify({ name: searchQuery, tenure: tenureValue, salary: salaryIs, salaryValue: salaryValue}));
 
     fetch("http://127.0.0.1:8080/professor/search", {
         method: "POST",
@@ -67,7 +70,7 @@ console.log(JSON.stringify({ name: searchQuery, tenure: tenureValue}));
             "Content-Type": "application/json"
         },
 
-        body: JSON.stringify({ name: searchQuery, tenure: tenureValue}), 
+        body: JSON.stringify({ name: searchQuery, tenure: tenureValue, salary: salaryIs, salaryValue: salaryValue}), 
     })
     
     .then(response => response.json())
@@ -99,8 +102,8 @@ function toggleCheckMenu(clickedCheckbox) {
     var classBelowCheckBox = document.getElementById("classBelow");
     var studentAboveCheckBox = document.getElementById("studentAbove");
     var studentBelowCheckBox = document.getElementById("studentBelow");
-    var salaryAboveCheckBox = document.getElementById("Above");
-    var salaryBelowCheckBox = document.getElementById("Below");
+    //var salaryAboveCheckBox = document.getElementById("Above");
+    // var salaryBelowCheckBox = document.getElementById("Below");
 
     if (!tenuredCheckBox.checked && !notTenuredCheckBox.checked) {
         tenureValue = [0, 1]; // Show all if none are selected
@@ -125,14 +128,34 @@ function toggleCheckMenu(clickedCheckbox) {
         studentAboveCheckBox.checked = false;
     }
 
-    if (clickedCheckbox === salaryAboveCheckBox) {
-        salaryBelowCheckBox.checked = false;
-    } else if (clickedCheckbox === salaryBelowCheckBox) {
-        salaryAboveCheckBox.checked = false;
+
+    let salaryValue = salaryInput.value.trim();
+    if (salaryValue !== "") {
+        salaryValue = parseFloat(salaryValue); // Convert to number
+        if (isNaN(salaryValue)) salaryValue = null;
+    } else {
+        salaryValue = null;
+    }
+    let salaryIs = null;
+    console.log("Salary:", salaryValue, " above:",salaryAboveCheckBox.checked, " b:", salaryBelowCheckBox.checked )
+
+    if (
+        (salaryValue !== null && (salaryAboveCheckBox.checked ||  salaryBelowCheckBox.checked)) 
+    ){
+        if (salaryAboveCheckBox.checked) {
+            salaryIs = "greater";
+        } else if (salaryBelowCheckBox.checked) {
+            salaryIs = "less";
+        }
+        
+    }else {
+        salaryIs = null;
     }
 
-    console.log("Tenure status:", tenureValue); // Debugging output to verify changes
-    fetchStudents(searchInput.value.trim(), tenureValue);
+    console.log("Salary:", salaryIs);
+    //console.log("Tenure status:", tenureValue); // Debugging output to verify changes
+    
+    fetchStudents(searchInput.value.trim(), tenureValue, salaryIs, salaryValue);
 }
 
 
@@ -150,3 +173,21 @@ document.addEventListener("DOMContentLoaded", () => {
         notTenuredCheckBox.addEventListener("change", () => toggleCheckMenu(notTenuredCheckBox));
     }
 });
+
+
+document.addEventListener("DOMContentLoaded", () => {
+    salaryInput.addEventListener("input", () => toggleCheckMenu(salaryInput));
+    salaryAboveCheckBox.addEventListener("change", () => {
+        salaryBelowCheckBox.checked = false;
+        toggleCheckMenu(salaryAboveCheckBox)
+    
+    });
+    salaryBelowCheckBox.addEventListener("change", () => {
+        salaryAboveCheckBox.checked = false;
+        toggleCheckMenu(salaryBelowCheckBox)});
+    
+    
+});
+
+
+
