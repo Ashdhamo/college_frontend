@@ -23,7 +23,6 @@ function toggleDetails(row, professor) {
             </div>
         </td>
     `;
-
     row.after(detailsRow);
 }
 
@@ -160,8 +159,34 @@ let addProfessorButton = document.querySelector(".addProfessor")
           <input type="radio" name="professorTenure" value=1 required> Tenured
           <input type="radio" name="professorTenure" value=0 required> Not Tenure</div>
 
-          <button class="addProfessorButton" id="addProfessorButton">Add Professor</button>
+          <button class="addProfessorButton" id="addProfessorButton2">Add Professor</button>
         </div>
     `;
     addProfessorButton.parentNode.replaceChild(replaceButton, addProfessorButton);
+    let addProfessorButton2 = document.getElementById("addProfessorButton2");
+    addProfessorButton2.addEventListener("click", () => {
+        let name = document.getElementById("professorName").value;
+        let email = document.getElementById("professorEmail").value;
+        let phone = document.getElementById("professorPhone").value;
+        let salary = document.getElementById("professorSalary").value;
+        let department = document.getElementById("professorDepartment").value;
+        let yearsWorked = document.getElementById("professorYearsWorked").value;
+        let tenure = document.querySelector('input[name="professorTenure"]:checked').value;
+        console.log(JSON.stringify({ name: name, email: email, phone: phone, salary: salary, department: department, years_worked: yearsWorked, tenure: tenure }))
+        fetch("http://127.0.0.1:8080/professor/add", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ name: name, email: email, phone: phone, salary: salary, department: department, years_worked: yearsWorked, tenure: tenure }),
+        })
+            .then(response => response.json())
+            .then(data => {
+                console.log(data);
+                alert("Professor added successfully!");
+                window.location.reload();
+            })
+            .catch(console.error);
+    });
+
 })
