@@ -326,7 +326,7 @@ body::before {
 }
 
 
-.addProfessorInfo{
+.addProfessorInfo, .editProfessorInfo{
     color: black;
     font: .6em sans-serif;
     align-items: center;

@@ -21,7 +21,7 @@ function toggleStudentDropdown(event) {
 
     let studentId = button.getAttribute("value");
     dropdown.setAttribute("data-student-id", studentId);
-    console.log("Student ID:", studentId);
+    console.log("ID:", studentId);
     dropdown.classList.toggle("show");
 }
 
