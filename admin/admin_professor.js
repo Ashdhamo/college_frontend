@@ -252,3 +252,18 @@ let editProfessorButton = document.querySelector(".editProfessor")
             .catch(console.error);
     });
     })
+
+let deleteProfessorButton = document.querySelector(".deleteProfessor")
+    deleteProfessorButton.addEventListener("click", ()=>{
+        let professorId = studentDropdown.getAttribute("data-student-id");
+        console.log("Delete clicked for professor ID:", professorId);
+        let deleteURL = "http://127.0.0.1:8080/professor/"+professorId;
+        fetch(deleteURL,{
+            method: "DELETE"
+    })
+        .then(response => response.json())
+        .then(data => {
+            console.log(data);
+            window.location.reload();
+        })
+    });
