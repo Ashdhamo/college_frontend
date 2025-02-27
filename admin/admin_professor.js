@@ -183,10 +183,72 @@ let addProfessorButton = document.querySelector(".addProfessor")
             .then(response => response.json())
             .then(data => {
                 console.log(data);
-                alert("Professor added successfully!");
                 window.location.reload();
             })
             .catch(console.error);
     });
-
 })
+let editProfessorButton = document.querySelector(".editProfessor")
+    editProfessorButton.addEventListener("click", ()=>{
+    let replaceEditButton=document.createElement('div')
+    let professorId = studentDropdown.getAttribute("data-student-id");
+    console.log("Edit clicked for professor ID:", professorId);
+    replaceEditButton.innerHTML = `
+        <div class="editProfessorInfo">
+        <div><h3>Professor Info</h3></div>
+          <div> <input type="text" id="professorName" placeholder="Name" required></div>
+          <div><input type="text" id="professorEmail" placeholder="Email" required></div>
+          <div><input type="text" id="professorPhone" placeholder="Phone" required></div>
+          <div><input type="number" id="professorSalary" placeholder="Salary" required></div>
+          <div><input type="text" id="professorDepartment" placeholder="Department" required></div>
+          <div> <input type="number" id="professorYearsWorked" placeholder="Years Worked" required></div>
+          <div>
+          <input type="radio" name="editProfessorTenure" value=1 required> Tenured
+          <input type="radio" name="editProfessorTenure" value=0 required> Not Tenure</div>
+
+          <button class="editProfessorButton" id="editProfessorButton2">Add Changes</button>
+        </div>
+    `;
+    editProfessorButton.parentNode.replaceChild(replaceEditButton, editProfessorButton);
+    let editProfessorButton2 = document.getElementById("editProfessorButton2");
+    editProfessorButton2.addEventListener("click", () => {
+        let name = document.getElementById("professorName").value;
+        let email = document.getElementById("professorEmail").value;
+        let phone = document.getElementById("professorPhone").value;
+        let salary = document.getElementById("professorSalary").value;
+        let department = document.getElementById("professorDepartment").value;
+        let yearsWorked = document.getElementById("professorYearsWorked").value;
+
+
+        
+        let tenure = null;
+        if(document.querySelector('input[name="editProfessorTenure:checked"]')!== null) {
+            let tenure = document.querySelector('input[name="editProfessorTenure"]:checked').value;
+        }
+
+      
+        let updatedProfessorFields ={}
+        if (name) updatedProfessorFields.name = name;
+        if (email) updatedProfessorFields.email = email;
+        if (phone) updatedProfessorFields.phone = phone;
+        if (salary) updatedProfessorFields.salary = salary;
+        if (department) updatedProfessorFields.department = department; 
+        if (yearsWorked) updatedProfessorFields.years_worked = yearsWorked;
+        if (tenure !== null) updatedProfessorFields.tenure = tenure;
+        console.log(updatedProfessorFields)
+        let urlEdit = "http://127.0.0.1:8080/professor/" + professorId;
+        fetch(urlEdit, {
+            method: "PATCH",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(updatedProfessorFields),
+        })
+            .then(response => response.json())
+            .then(data => {
+                console.log(data);
+                window.location.reload();
+            })
+            .catch(console.error);
+    });
+    })
