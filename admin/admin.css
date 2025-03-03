@@ -241,17 +241,17 @@ body::before {
     margin-right: 5px; /* Space between checkbox and label */
 }
 
-
-
-
 .student-dots {
     font-size: 24px; 
-    color: #cccccc;    
+    color: #cccccc;
+    border: none;  
+    background-color: transparent;
 }
 .student-dots:hover {
     font-size: 24px; 
     background-color: #ece8e8;    
 }
+
 .dropdownStudent{
     float: right;
 }
