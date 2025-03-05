@@ -336,3 +336,20 @@ body::before {
 .addProfessorInfo button{
     padding-top: 15px;
 }
+.schedule-table {
+    width: 40%; /* Reduced width */
+    margin: 10px auto;
+    border-collapse: collapse;
+    text-align: center;
+    font-size: 13px; /* Smaller text */
+    background-color: white;
+    color: black;
+}
+
+.schedule-table th, .schedule-table td {
+    border: 1px solid black; /* Black border */
+    padding: 4px; /* Reduced padding */
+    background-color: white; /* White background */
+    color: black; /* Black text */
+    font: .3em serif;
+}
