@@ -8,6 +8,8 @@ window.onload = function () {
         return;
     }
 
+    
+
     fetchClasses();
 };
 
@@ -15,6 +17,8 @@ function fetchClasses() {
     fetch("http://127.0.0.1:8080/classes/")
         .then(response => response.json())
         .then(data => {
+            console.log("API Response:", data); // ✅ Log what API sends
+
             let tableBody = document.getElementById("classTableBody");
             tableBody.innerHTML = ""; 
 
@@ -35,10 +39,11 @@ function fetchClasses() {
         .catch(console.error);
 }
 
+
 function toggleDetails(row, cls) {
+    console.log("toggleDetails triggered", cls);  // ✅ Check API response
+
     let nextRow = row.nextElementSibling;
-    
-    // Allows toggle on/off info without duplication
     if (nextRow && nextRow.classList.contains("details-row")) {
         nextRow.remove();
         return;
@@ -49,7 +54,7 @@ function toggleDetails(row, cls) {
     detailsRow.innerHTML = `
     <td colspan="2">
         <div class="class-details">
-            <p><strong>Professor ID:</strong> ${cls.professorID}</p>
+            <p><strong>Professor Name:</strong> ${cls.professor_name ? cls.professor_name : "Unknown"}</p>  <!-- ✅ FIXED -->
             <p><strong>Start Date:</strong> ${cls.start_date}</p>
             <p><strong>End Date:</strong> ${cls.end_date}</p>
             <p><strong>Seats:</strong> ${cls.seats}</p>
@@ -64,7 +69,7 @@ function toggleDetails(row, cls) {
                     </tr>
                 </thead>
                 <tbody>
-                    ${cls.schedule.map(sch => `
+                    ${(cls.schedule || []).map(sch => `
                         <tr>
                             <td>${sch.class_day}</td>
                             <td>${sch.start_time}</td>
@@ -74,11 +79,10 @@ function toggleDetails(row, cls) {
             </table>
         </div>
     </td>
-`;
-
-
+    `;
     row.after(detailsRow);
 }
+
 
 function formatSchedule(schedule) {
     return schedule.map(sch => `${sch.class_day}: ${sch.start_time} - ${sch.end_time}`).join("<br>");
