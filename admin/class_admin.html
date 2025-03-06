@@ -21,15 +21,15 @@
     
     <div id="myDropdown" class="dropdown-content">
         <a href="#">Admin</a>
-        <a href="#">Class</a>
-        <a href="#">Professor</a>
+        <a href="student_admin.html">Student</a>
+        <a href="professor_admin.html">Professor</a>
         <a href="../login/login.html" class="logout">
             <i class='bx bx-log-out'></i> Logout
-        </a>
+      </a>
         
     </div> 
     <div class="searchBar">
-        <input id="userName" type="text" placeholder="Search for a Class " required>
+        <input id="searchInput" type="text" placeholder="Search for a Class " required>
         <button>Search</button>
         <button id="filter">
             <i class='bx bxs-chevron-down'></i>
@@ -37,5 +37,65 @@
     </div>
       
       <script src="admin.js"></script> 
+      <script src="class_admin.js"></script> 
 </body>
+</html>
+
+    <div id="filterDropdown" class="dropdown-content">
+        <div class="filter-section">
+            <label for="GPA">GPA:</label>
+            <input id="GPA" type="number" placeholder="Enter GPA" required>
+            <div class="checkbox-group">
+                <label><input id="higherGPA" type="checkbox" onclick="toggleGPAmenu(this)"> Above</label>
+                <label><input id="lowerGPA" type="checkbox" onclick="toggleGPAmenu(this)"> Below</label>
+            </div>
+        </div>
+        
+    
+        <div class="filter-section">
+            <p>Year:</p>
+            <div class="checkbox-group">
+                <label><input id="year1" type="checkbox" value="1"> 1</label>
+                <label><input id="year2" type="checkbox" value="2"> 2</label>
+                <label><input id="year3" type="checkbox" value="3"> 3</label>
+                <label><input id="year4" type="checkbox" value="4"> 4</label>
+                <label><input id="year5" type="checkbox" value="5"> Other</label>
+            </div>
+        </div>
+    
+        <div class="filter-section">
+            <label for="major">Major:</label>
+            <input id="major" type="text" placeholder="Enter Major" required>
+        </div>
+    </div>
+    
+    <div id="classDropdown" class="dropdown-content">
+        <div class="editClass"><p>Edit Class</p></div>
+        <div class="deleteClass"><p>Delete Class</p></div>
+    </div>
+
+    <!-- Student Table -->
+    <div class="table-container">
+        <table id="studentTable" border="1">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                </tr>
+            </thead>
+            <tbody id="classTableBody">
+                <!-- Student data will be inserted here -->
+            </tbody>
+            <tr>
+                <td colspan="2" style="text-align: center;">
+                    <button class="addStudent">Add Class</button> 
+                </td>
+            </tr> 
+        </table>
+    </div>
+
+    <script src="admin.js"></script> 
+    <script src="class_admin.js"></script> 
+</body>
+
 </html>
